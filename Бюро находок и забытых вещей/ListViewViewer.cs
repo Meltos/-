@@ -55,5 +55,32 @@ namespace Бюро_находок_и_забытых_вещей
             listView.Items.AddRange(rows.Take(max).ToArray());
             listView.EndUpdate();
         }
+
+        public void ViewDataAdvertisement(List<Advertisement> data, int code, Category category, SubCategory subCategory, Country country, City city, string discoverd)
+        {
+            int max = data.Count() <= rows.Length ? data.Count() : rows.Length;
+            int i = 0;
+            listView.BeginUpdate();
+            listView.Items.Clear();
+            // меняем данные в колонках для всех выводимых записей
+            for (; i < max; i++) 
+            {
+                var row = data.ElementAt(i);
+                if (code == 0)
+                {
+                    for (int c = 0; c < columnCount; c++)
+                        rows[i].SubItems[c].Text = row.GetName(c);
+                    rows[i].Tag = row;
+                }
+                else if (code == 1 && row.City.NameCity == city.NameCity && row.Subcategory.NameSubcategory == subCategory.NameSubcategory && row.Discovered == discoverd)
+                {
+                    for (int c = 0; c < columnCount; c++)
+                        rows[i].SubItems[c].Text = row.GetName(c);
+                    rows[i].Tag = row;
+                }
+            }
+            listView.Items.AddRange(rows.Take(max).ToArray());
+            listView.EndUpdate();
+        }
     }
 }

@@ -82,13 +82,13 @@ namespace Бюро_находок_и_забытых_вещей
             if (combocountry.NameCountry == "" && combocategory.NameCategory == "" && combodiscovered == "")
             {
                 code = 0;
-                viewer.ViewData(rows, code);
+                viewer.ViewDataAdvertisement(rows, code, combocategory, combosubCategory, combocountry, combocity, combodiscovered);
                 return;
             }
             if (combocountry.NameCountry != "" && combocategory.NameCategory != "" && combodiscovered != "" && combocity.NameCity != "" && combosubCategory.NameSubcategory != "")
             {
                 code = 1;
-                viewer.ViewData(rows, code);
+                viewer.ViewDataAdvertisement(rows, code, combocategory, combosubCategory, combocountry, combocity, combodiscovered);
                 return;
             }
 
