@@ -68,8 +68,7 @@ namespace Бюро_находок_и_забытых_вещей
 
         private void ShowAdvertisementData(List<Advertisement> rows)
         {
-            listView1.Items.Clear();
-            int code = 0;
+            List<Advertisement> filter = new List<Advertisement>();
             Country combocountry = new Country();
             combocountry = (Country)comboBox1.SelectedItem;
             City combocity = new City();
@@ -81,18 +80,71 @@ namespace Бюро_находок_и_забытых_вещей
             string combodiscovered = (string)comboBox5.SelectedItem;
             if (combocountry.NameCountry == "" && combocategory.NameCategory == "" && combodiscovered == "")
             {
-                code = 0;
-                viewer.ViewDataAdvertisement(rows, code, combocategory, combosubCategory, combocountry, combocity, combodiscovered);
+                viewer.ViewData(rows);
                 return;
             }
-            if (combocountry.NameCountry != "" && combocategory.NameCategory != "" && combodiscovered != "" && combocity.NameCity != "" && combosubCategory.NameSubcategory != "")
+            foreach (var row in rows)
             {
-                code = 1;
-                viewer.ViewDataAdvertisement(rows, code, combocategory, combosubCategory, combocountry, combocity, combodiscovered);
-                return;
+                if (combocountry.NameCountry == row.Country.NameCountry && combocategory.NameCategory == row.Category.NameCategory && combodiscovered == row.Discovered && combocity.NameCity == row.City.NameCity && combosubCategory.NameSubcategory == row.Subcategory.NameSubcategory)
+                {
+                    filter.Add(row);
+                }
+                //city
+                else if (combocountry.NameCountry == row.Country.NameCountry && combocategory.NameCategory == row.Category.NameCategory && combodiscovered == row.Discovered && combosubCategory.NameSubcategory == row.Subcategory.NameSubcategory && combocity.NameCity == "")
+                {
+                    filter.Add(row);
+                }
+                else if (combocountry.NameCountry == row.Country.NameCountry && combocategory.NameCategory == row.Category.NameCategory && combodiscovered == "" && combosubCategory.NameSubcategory == row.Subcategory.NameSubcategory && combocity.NameCity == "")
+                {
+                    filter.Add(row);
+                }
+                else if (combocountry.NameCountry == row.Country.NameCountry && combocategory.NameCategory == row.Category.NameCategory && combodiscovered == "" && combosubCategory.NameSubcategory == "" && combocity.NameCity == "")
+                {
+                    filter.Add(row);
+                }
+                else if (combocountry.NameCountry == row.Country.NameCountry && combocategory.NameCategory == "" && combodiscovered == "" && combocity.NameCity == "")
+                {
+                    filter.Add(row);
+                }
+                else if (combocountry.NameCountry == row.Country.NameCountry && combocategory.NameCategory == "" && combodiscovered == row.Discovered && combocity.NameCity == "")
+                {
+                    filter.Add(row);
+                }
+                else if (combocountry.NameCountry == row.Country.NameCountry && combocategory.NameCategory == row.Category.NameCategory && combodiscovered == row.Discovered && combocity.NameCity == "" && combosubCategory.NameSubcategory == "")
+                {
+                    filter.Add(row);
+                }
+                //subCategory
+                else if (combocountry.NameCountry == row.Country.NameCountry && combocategory.NameCategory == row.Category.NameCategory && combodiscovered == row.Discovered && combocity.NameCity == row.City.NameCity && combosubCategory.NameSubcategory == "")
+                {
+                    filter.Add(row);
+                }
+                else if (combocountry.NameCountry == row.Country.NameCountry && combocategory.NameCategory == row.Category.NameCategory && combodiscovered == "" && combocity.NameCity == row.City.NameCity && combosubCategory.NameSubcategory == "")
+                {
+                    filter.Add(row);
+                }
+                else if (combocountry.NameCountry == "" && combocategory.NameCategory == row.Category.NameCategory && combodiscovered == "" && combosubCategory.NameSubcategory == "")
+                {
+                    filter.Add(row);
+                }
+                else if (combocountry.NameCountry == "" && combocategory.NameCategory == row.Category.NameCategory && combodiscovered == row.Discovered && combosubCategory.NameSubcategory == "")
+                {
+                    filter.Add(row);
+                }
+                else if (combocountry.NameCountry == "" && combocategory.NameCategory == "" && combodiscovered == row.Discovered)
+                {
+                    filter.Add(row);
+                }
+                else if (combocountry.NameCountry == row.Country.NameCountry && combocategory.NameCategory == "" && combodiscovered == "" && combocity.NameCity == row.City.NameCity)
+                {
+                    filter.Add(row);
+                }
+                else if (combocountry.NameCountry == row.Country.NameCountry && combocategory.NameCategory == "" && combodiscovered == row.Discovered && combocity.NameCity == row.City.NameCity)
+                {
+                    filter.Add(row);
+                }
             }
-
-
+            viewer.ViewData(filter);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -113,6 +165,12 @@ namespace Бюро_находок_и_забытых_вещей
 
         private void добавитьГородToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            var countries = countryDB.GetList();
+            if (countries.Count == 0)
+            {
+                MessageBox.Show("Вы ещё не добавили страну!");
+                return;
+            }
             CityForm cityForm = new CityForm();
             cityForm.ShowDialog();
         }
@@ -125,6 +183,12 @@ namespace Бюро_находок_и_забытых_вещей
 
         private void добавитьПодкатегориюToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            var categories = categoryDB.GetList();
+            if (categories.Count == 0)
+            {
+                MessageBox.Show("Вы ещё не создали категорию!");
+                return;
+            }
             SubcategoryForm subcategoryForm = new SubcategoryForm();
             subcategoryForm.ShowDialog();
         }
@@ -133,7 +197,7 @@ namespace Бюро_находок_и_забытых_вещей
         {
             Country combocountry = new Country();
             combocountry = (Country)comboBox1.SelectedItem;
-            if (combocountry.NameCountry == "")
+            if (combocountry.NameCountry == "" || combocountry.Cities.Count == 0)
             {
                 label2.Visible = false;
                 comboBox2.Visible = false;
@@ -150,7 +214,7 @@ namespace Бюро_находок_и_забытых_вещей
         {
             Category combocategory = new Category();
             combocategory = (Category)comboBox3.SelectedItem;
-            if (combocategory.NameCategory == "")
+            if (combocategory.NameCategory == "" || combocategory.Subcategories.Count == 0)
             {
                 label4.Visible = false;
                 comboBox4.Visible = false;
@@ -165,6 +229,18 @@ namespace Бюро_находок_и_забытых_вещей
 
         private void добавитьОбъявлениеToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            var categories = categoryDB.GetList();
+            var countries = countryDB.GetList();
+            if (categories.Count == 0)
+            {
+                MessageBox.Show("Вы ещё не создали категорию!");
+                return;
+            }
+            else if (countries.Count == 0)
+            {
+                MessageBox.Show("Вы ещё не добавили страну!");
+                return;
+            }
             paginator.ShowRowsChanges -= Paginator_ShowRowsChanges;
             AddAdvertisementForm addAdvertisementForm = new AddAdvertisementForm(dB, categoryDB, countryDB, discoveredDB, dB.Add(), 1);
             addAdvertisementForm.ShowDialog();

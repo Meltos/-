@@ -54,6 +54,7 @@
             this.добавитьПодкатегориюToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.добавитьОбъявлениеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -92,7 +93,8 @@
             this.columnHeader1,
             this.columnHeader2,
             this.columnHeader3,
-            this.columnHeader4});
+            this.columnHeader4,
+            this.columnHeader5});
             this.listView1.FullRowSelect = true;
             this.listView1.HideSelection = false;
             this.listView1.Location = new System.Drawing.Point(12, 127);
@@ -115,7 +117,7 @@
             // 
             // columnHeader3
             // 
-            this.columnHeader3.Text = "Статус";
+            this.columnHeader3.Text = "Обнаружение";
             this.columnHeader3.Width = 94;
             // 
             // columnHeader4
@@ -141,7 +143,6 @@
             this.label5.Size = new System.Drawing.Size(111, 13);
             this.label5.TabIndex = 42;
             this.label5.Text = "Статус обнаружения";
-            this.label5.Visible = false;
             // 
             // comboBox5
             // 
@@ -287,6 +288,11 @@
             this.добавитьОбъявлениеToolStripMenuItem.Text = "Добавить объявление";
             this.добавитьОбъявлениеToolStripMenuItem.Click += new System.EventHandler(this.добавитьОбъявлениеToolStripMenuItem_Click);
             // 
+            // columnHeader5
+            // 
+            this.columnHeader5.Text = "Статус";
+            this.columnHeader5.Width = 82;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -309,6 +315,7 @@
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.comboBox1);
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Список объявлений";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -345,5 +352,6 @@
         private System.Windows.Forms.ToolStripMenuItem добавитьПодкатегориюToolStripMenuItem;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem добавитьОбъявлениеToolStripMenuItem;
+        private System.Windows.Forms.ColumnHeader columnHeader5;
     }
 }

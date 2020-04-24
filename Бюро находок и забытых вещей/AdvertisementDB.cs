@@ -36,11 +36,11 @@ namespace Бюро_находок_и_забытых_вещей
             categoryDB = new CategoryDB();
             countryDB = new CountryDB();
             discoveredDB = new DiscoveredDB();
-            var catigories = categoryDB.GetList();
-            var countries = countryDB.GetList();
-            var cities = countryDB.GetCities(countries[0]);
-            var subcatigories = categoryDB.GetSubCategories(catigories[0]);
-            var discovereds = discoveredDB.GetDiscovered();
+            var catigories = categoryDB.GetListCombobox();
+            var countries = countryDB.GetListCombobox();
+            var cities = countryDB.GetListComboboxCity(countries[0]);
+            var subcatigories = categoryDB.GetListComboboxSubCategory(catigories[0]);
+            var discovereds = discoveredDB.GetDiscoveredBox();
             Advertisement advertisement = new Advertisement
             {
                 Address = "",

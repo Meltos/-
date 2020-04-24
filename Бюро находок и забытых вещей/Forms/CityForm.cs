@@ -54,8 +54,7 @@ namespace Бюро_находок_и_забытых_вещей
 
         private void ShowData(List<City> rows)
         {
-            int code = 0;
-            viewer.ViewData(rows.Select(s => (IViewRow)s), code);
+            viewer.ViewData(rows.Select(s => (IViewRow)s));
         }
 
         private void button2_Click(object sender, EventArgs e)
