@@ -78,8 +78,21 @@ namespace Бюро_находок_и_забытых_вещей
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            Category combocategory = new Category();
+            combocategory = (Category)comboBox1.SelectedItem;
+            if (combocategory.Subcategories.Count == 0)
+            {
+                label3.Visible = false;
+                comboBox2.Visible = false;
+                comboBox2.DataSource = null;
+                comboBox2.DataSource = categoryDB.GetListComboboxSubCategory((Category)comboBox1.SelectedItem);
+                comboBox2.DisplayMember = "NameSubcategory";
+                return;
+            }
+            label3.Visible = true;
+            comboBox2.Visible = true;
             comboBox2.DataSource = null;
-            comboBox2.DataSource = categoryDB.GetSubCategories((Category)comboBox1.SelectedItem);
+            comboBox2.DataSource = categoryDB.GetListComboboxSubCategory((Category)comboBox1.SelectedItem);
             comboBox2.DisplayMember = "NameSubcategory";
             if (code == 0)
                 comboBox2.SelectedItem = advertisement.Subcategory;
@@ -87,8 +100,21 @@ namespace Бюро_находок_и_забытых_вещей
 
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
+            Country combocountry = new Country();
+            combocountry = (Country)comboBox3.SelectedItem;
+            if (combocountry.Cities.Count == 0)
+            {
+                label5.Visible = false;
+                comboBox4.Visible = false;
+                comboBox4.DataSource = null;
+                comboBox4.DataSource = countryDB.GetListComboboxCity((Country)comboBox3.SelectedItem);
+                comboBox4.DisplayMember = "NameCity";
+                return;
+            }
+            label5.Visible = true;
+            comboBox4.Visible = true;
             comboBox4.DataSource = null;
-            comboBox4.DataSource = countryDB.GetCities((Country)comboBox3.SelectedItem);
+            comboBox4.DataSource = countryDB.GetListComboboxCity((Country)comboBox3.SelectedItem);
             comboBox4.DisplayMember = "NameCity";
             if (code == 0)
                 comboBox4.SelectedItem = advertisement.City;

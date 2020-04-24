@@ -96,6 +96,7 @@
             this.label3.Size = new System.Drawing.Size(79, 13);
             this.label3.TabIndex = 5;
             this.label3.Text = "Подкатегория";
+            this.label3.Visible = false;
             // 
             // comboBox2
             // 
@@ -105,6 +106,7 @@
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(371, 21);
             this.comboBox2.TabIndex = 4;
+            this.comboBox2.Visible = false;
             // 
             // label4
             // 
@@ -133,6 +135,7 @@
             this.label5.Size = new System.Drawing.Size(37, 13);
             this.label5.TabIndex = 9;
             this.label5.Text = "Город";
+            this.label5.Visible = false;
             // 
             // comboBox4
             // 
@@ -142,6 +145,7 @@
             this.comboBox4.Name = "comboBox4";
             this.comboBox4.Size = new System.Drawing.Size(371, 21);
             this.comboBox4.TabIndex = 8;
+            this.comboBox4.Visible = false;
             // 
             // label6
             // 

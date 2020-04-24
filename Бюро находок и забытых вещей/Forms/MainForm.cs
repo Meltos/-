@@ -143,6 +143,14 @@ namespace Бюро_находок_и_забытых_вещей
                 {
                     filter.Add(row);
                 }
+                else if (combocountry.NameCountry == "" && combocategory.NameCategory == row.Category.NameCategory && combodiscovered == "" && combocity.NameCity == "" && combosubCategory.NameSubcategory == row.Subcategory.NameSubcategory)
+                {
+                    filter.Add(row);
+                }
+                else if (combocountry.NameCountry == "" && combocategory.NameCategory == row.Category.NameCategory && combodiscovered == row.Discovered && combocity.NameCity == "" && combosubCategory.NameSubcategory == row.Subcategory.NameSubcategory)
+                {
+                    filter.Add(row);
+                }
             }
             viewer.ViewData(filter);
         }
@@ -201,6 +209,9 @@ namespace Бюро_находок_и_забытых_вещей
             {
                 label2.Visible = false;
                 comboBox2.Visible = false;
+                comboBox2.DataSource = null;
+                comboBox2.DataSource = countryDB.GetListComboboxCity(combocountry);
+                comboBox2.DisplayMember = "NameCity";
                 return;
             }
             label2.Visible = true;
@@ -218,6 +229,9 @@ namespace Бюро_находок_и_забытых_вещей
             {
                 label4.Visible = false;
                 comboBox4.Visible = false;
+                comboBox4.DataSource = null;
+                comboBox4.DataSource = categoryDB.GetListComboboxSubCategory(combocategory);
+                comboBox4.DisplayMember = "NameSubcategory";
                 return;
             }
             label4.Visible = true;
