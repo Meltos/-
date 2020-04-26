@@ -92,7 +92,7 @@ namespace Бюро_находок_и_забытых_вещей
             label3.Visible = true;
             comboBox2.Visible = true;
             comboBox2.DataSource = null;
-            comboBox2.DataSource = categoryDB.GetListComboboxSubCategory((Category)comboBox1.SelectedItem);
+            comboBox2.DataSource = categoryDB.GetSubCategories((Category)comboBox1.SelectedItem);
             comboBox2.DisplayMember = "NameSubcategory";
             if (code == 0)
                 comboBox2.SelectedItem = advertisement.Subcategory;
@@ -114,7 +114,7 @@ namespace Бюро_находок_и_забытых_вещей
             label5.Visible = true;
             comboBox4.Visible = true;
             comboBox4.DataSource = null;
-            comboBox4.DataSource = countryDB.GetListComboboxCity((Country)comboBox3.SelectedItem);
+            comboBox4.DataSource = countryDB.GetCities((Country)comboBox3.SelectedItem);
             comboBox4.DisplayMember = "NameCity";
             if (code == 0)
                 comboBox4.SelectedItem = advertisement.City;

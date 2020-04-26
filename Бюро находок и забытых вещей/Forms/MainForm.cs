@@ -85,69 +85,11 @@ namespace Бюро_находок_и_забытых_вещей
             }
             foreach (var row in rows)
             {
-                if (combocountry.NameCountry == row.Country.NameCountry && combocategory.NameCategory == row.Category.NameCategory && combodiscovered == row.Discovered && combocity.NameCity == row.City.NameCity && combosubCategory.NameSubcategory == row.Subcategory.NameSubcategory)
-                {
-                    filter.Add(row);
-                }
-                //city
-                else if (combocountry.NameCountry == row.Country.NameCountry && combocategory.NameCategory == row.Category.NameCategory && combodiscovered == row.Discovered && combosubCategory.NameSubcategory == row.Subcategory.NameSubcategory && combocity.NameCity == "")
-                {
-                    filter.Add(row);
-                }
-                else if (combocountry.NameCountry == row.Country.NameCountry && combocategory.NameCategory == row.Category.NameCategory && combodiscovered == "" && combosubCategory.NameSubcategory == row.Subcategory.NameSubcategory && combocity.NameCity == "")
-                {
-                    filter.Add(row);
-                }
-                else if (combocountry.NameCountry == row.Country.NameCountry && combocategory.NameCategory == row.Category.NameCategory && combodiscovered == "" && combosubCategory.NameSubcategory == "" && combocity.NameCity == "")
-                {
-                    filter.Add(row);
-                }
-                else if (combocountry.NameCountry == row.Country.NameCountry && combocategory.NameCategory == "" && combodiscovered == "" && combocity.NameCity == "")
-                {
-                    filter.Add(row);
-                }
-                else if (combocountry.NameCountry == row.Country.NameCountry && combocategory.NameCategory == "" && combodiscovered == row.Discovered && combocity.NameCity == "")
-                {
-                    filter.Add(row);
-                }
-                else if (combocountry.NameCountry == row.Country.NameCountry && combocategory.NameCategory == row.Category.NameCategory && combodiscovered == row.Discovered && combocity.NameCity == "" && combosubCategory.NameSubcategory == "")
-                {
-                    filter.Add(row);
-                }
-                //subCategory
-                else if (combocountry.NameCountry == row.Country.NameCountry && combocategory.NameCategory == row.Category.NameCategory && combodiscovered == row.Discovered && combocity.NameCity == row.City.NameCity && combosubCategory.NameSubcategory == "")
-                {
-                    filter.Add(row);
-                }
-                else if (combocountry.NameCountry == row.Country.NameCountry && combocategory.NameCategory == row.Category.NameCategory && combodiscovered == "" && combocity.NameCity == row.City.NameCity && combosubCategory.NameSubcategory == "")
-                {
-                    filter.Add(row);
-                }
-                else if (combocountry.NameCountry == "" && combocategory.NameCategory == row.Category.NameCategory && combodiscovered == "" && combosubCategory.NameSubcategory == "")
-                {
-                    filter.Add(row);
-                }
-                else if (combocountry.NameCountry == "" && combocategory.NameCategory == row.Category.NameCategory && combodiscovered == row.Discovered && combosubCategory.NameSubcategory == "")
-                {
-                    filter.Add(row);
-                }
-                else if (combocountry.NameCountry == "" && combocategory.NameCategory == "" && combodiscovered == row.Discovered)
-                {
-                    filter.Add(row);
-                }
-                else if (combocountry.NameCountry == row.Country.NameCountry && combocategory.NameCategory == "" && combodiscovered == "" && combocity.NameCity == row.City.NameCity)
-                {
-                    filter.Add(row);
-                }
-                else if (combocountry.NameCountry == row.Country.NameCountry && combocategory.NameCategory == "" && combodiscovered == row.Discovered && combocity.NameCity == row.City.NameCity)
-                {
-                    filter.Add(row);
-                }
-                else if (combocountry.NameCountry == "" && combocategory.NameCategory == row.Category.NameCategory && combodiscovered == "" && combocity.NameCity == "" && combosubCategory.NameSubcategory == row.Subcategory.NameSubcategory)
-                {
-                    filter.Add(row);
-                }
-                else if (combocountry.NameCountry == "" && combocategory.NameCategory == row.Category.NameCategory && combodiscovered == row.Discovered && combocity.NameCity == "" && combosubCategory.NameSubcategory == row.Subcategory.NameSubcategory)
+                if (row.Country.NameCountry.Contains(combocountry?.NameCountry) &&
+                row.Category.NameCategory.Contains(combocategory?.NameCategory) &&
+                row.Discovered.Contains(combodiscovered) &&
+                row.City.NameCity.Contains(combocity?.NameCity) &&
+                row.Subcategory.NameSubcategory.Contains(combosubCategory?.NameSubcategory))
                 {
                     filter.Add(row);
                 }
