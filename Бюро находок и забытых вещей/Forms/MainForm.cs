@@ -18,36 +18,41 @@ namespace Бюро_находок_и_забытых_вещей
         CountryDB countryDB;
         DiscoveredDB discoveredDB;
         AdvertisementDB dB;
+        int i = 0;
         public MainForm()
         {
             InitializeComponent();
-
-            countryDB = new CountryDB();
-            comboBox1.DataSource = null;
-            comboBox1.DataSource = countryDB.GetListCombobox();
-            comboBox1.DisplayMember = "NameCountry";
-
-            categoryDB = new CategoryDB();
-            comboBox3.DataSource = null;
-            comboBox3.DataSource = categoryDB.GetListCombobox();
-            comboBox3.DisplayMember = "NameCategory";
-
-            discoveredDB = new DiscoveredDB();
-            comboBox5.DataSource = null;
-            comboBox5.DataSource = discoveredDB.GetDiscoveredBox();
-            comboBox5.DisplayMember = "Status";
+            LoadBox();
 
             dB = new AdvertisementDB();
             // создаем экземпляр пагинатора для отображения 10 записей на странице. Число 10 можно сделать переменной и вынести в настройки
-            paginator = new Paginator<AdvertisementDB, Advertisement>(dB, 10);
+            paginator = new Paginator<AdvertisementDB, Advertisement>(dB, 20);
             // для отображения данных в листвью я сделал отдельный класс
             // в нем кэшируются строки
-            viewer = new ListViewViewer(listView1, 5, 10);
+            viewer = new ListViewViewer(listView1, 5, 20);
 
 
             // вызываем обновление всех данных и событий
             // за счет того, что данный метод вызывается ПОСЛЕ создания пагинатора интерфейс успевает подписаться на события пагинатора и нормально отобразить все данные
             dB.Save();
+        }
+
+        private void LoadBox()
+        {
+            countryDB = new CountryDB();
+            categoryDB = new CategoryDB();
+            discoveredDB = new DiscoveredDB();
+            comboBox1.DataSource = null;
+            comboBox1.DataSource = countryDB.GetListCombobox();
+            comboBox1.DisplayMember = "NameCountry";
+
+            comboBox3.DataSource = null;
+            comboBox3.DataSource = categoryDB.GetListCombobox();
+            comboBox3.DisplayMember = "NameCategory";
+
+            comboBox5.DataSource = null;
+            comboBox5.DataSource = discoveredDB.GetDiscoveredBox();
+            comboBox5.DisplayMember = "Status";
         }
 
         private void Paginator_CurrentIndexChanged(object sender, EventArgs e)
@@ -109,8 +114,9 @@ namespace Бюро_находок_и_забытых_вещей
 
         private void добавитьСтрануToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CountryForm countryForm = new CountryForm();
+            CountryForm countryForm = new CountryForm(countryDB);
             countryForm.ShowDialog();
+            LoadBox();
         }
 
         private void добавитьГородToolStripMenuItem_Click(object sender, EventArgs e)
@@ -121,14 +127,16 @@ namespace Бюро_находок_и_забытых_вещей
                 MessageBox.Show("Вы ещё не добавили страну!");
                 return;
             }
-            CityForm cityForm = new CityForm();
+            CityForm cityForm = new CityForm(countryDB);
             cityForm.ShowDialog();
+            LoadBox();
         }
 
         private void добавитьКатегориюToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CategoryForm categoryForm = new CategoryForm();
+            CategoryForm categoryForm = new CategoryForm(categoryDB);
             categoryForm.ShowDialog();
+            LoadBox();
         }
 
         private void добавитьПодкатегориюToolStripMenuItem_Click(object sender, EventArgs e)
@@ -139,12 +147,15 @@ namespace Бюро_находок_и_забытых_вещей
                 MessageBox.Show("Вы ещё не создали категорию!");
                 return;
             }
-            SubcategoryForm subcategoryForm = new SubcategoryForm();
+            SubcategoryForm subcategoryForm = new SubcategoryForm(categoryDB);
             subcategoryForm.ShowDialog();
+            LoadBox();
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (comboBox1.SelectedIndex == -1)
+                return;
             Country combocountry = new Country();
             combocountry = (Country)comboBox1.SelectedItem;
             if (combocountry.NameCountry == "" || combocountry.Cities.Count == 0)
@@ -165,6 +176,8 @@ namespace Бюро_находок_и_забытых_вещей
 
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (comboBox3.SelectedIndex == -1)
+                return;
             Category combocategory = new Category();
             combocategory = (Category)comboBox3.SelectedItem;
             if (combocategory.NameCategory == "" || combocategory.Subcategories.Count == 0)
@@ -214,7 +227,6 @@ namespace Бюро_находок_и_забытых_вещей
 
         private void button1_Click(object sender, EventArgs e)
         {
-            int i = 0;
             if (i == 1)
             {
                 // подписываемся на событие изменения выводимых записей
@@ -225,6 +237,7 @@ namespace Бюро_находок_и_забытых_вещей
                 paginator.CurrentIndexChanged -= Paginator_CurrentIndexChanged;
                 i--;
             }
+            
             // подписываемся на событие изменения выводимых записей
             paginator.ShowRowsChanges += Paginator_ShowRowsChanges;
             // подписываемся на изменение кол-ва страниц

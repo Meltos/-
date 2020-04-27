@@ -16,10 +16,10 @@ namespace Бюро_находок_и_забытых_вещей
         ListViewViewer viewer;
         CityDB dB;
         CountryDB CountryDB;
-        public CityForm()
+        public CityForm(CountryDB CountryDB)
         {
             InitializeComponent();
-            CountryDB = new CountryDB();
+            this.CountryDB = CountryDB;
             comboBox1.DataSource = null;
             comboBox1.DataSource = CountryDB.GetList();
             comboBox1.DisplayMember = "NameCountry";

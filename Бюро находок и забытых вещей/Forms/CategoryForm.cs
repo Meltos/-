@@ -15,11 +15,11 @@ namespace Бюро_находок_и_забытых_вещей
         Paginator<CategoryDB, Category> paginator;
         ListViewViewer viewer;
         CategoryDB dB;
-        public CategoryForm()
+        public CategoryForm(CategoryDB dB)
         {
             InitializeComponent();
 
-            dB = new CategoryDB();
+            this.dB = dB;
             // создаем экземпляр пагинатора для отображения 10 записей на странице. Число 10 можно сделать переменной и вынести в настройки
             paginator = new Paginator<CategoryDB, Category>(dB, 15);
             // для отображения данных в листвью я сделал отдельный класс

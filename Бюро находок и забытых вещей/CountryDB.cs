@@ -29,11 +29,6 @@ namespace Бюро_находок_и_забытых_вещей
 
         public CountryDB()
         {
-            Load();
-        }
-
-        public void Load()
-        {
             if (!File.Exists(fileName))
                 return;
             BinaryFormatter bf = new BinaryFormatter();
@@ -106,7 +101,6 @@ namespace Бюро_находок_и_забытых_вещей
 
         public List<Country> GetList()
         {
-            Load();
             return countries;
         }
 

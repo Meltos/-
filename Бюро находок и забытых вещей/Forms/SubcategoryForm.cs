@@ -16,10 +16,10 @@ namespace Бюро_находок_и_забытых_вещей
         ListViewViewer viewer;
         CategoryDB categoryDB;
         SubCategoryDB dB;
-        public SubcategoryForm()
+        public SubcategoryForm(CategoryDB categoryDB)
         {
             InitializeComponent();
-            categoryDB = new CategoryDB();
+            this.categoryDB = categoryDB;
             comboBox1.DataSource = null;
             comboBox1.DataSource = categoryDB.GetList();
             comboBox1.DisplayMember = "NameCategory";

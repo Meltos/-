@@ -36,6 +36,7 @@
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.button1 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.comboBox5 = new System.Windows.Forms.ComboBox();
@@ -54,7 +55,6 @@
             this.добавитьПодкатегориюToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.добавитьОбъявлениеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -123,7 +123,12 @@
             // columnHeader4
             // 
             this.columnHeader4.Text = "Описание";
-            this.columnHeader4.Width = 407;
+            this.columnHeader4.Width = 382;
+            // 
+            // columnHeader5
+            // 
+            this.columnHeader5.Text = "Статус";
+            this.columnHeader5.Width = 82;
             // 
             // button1
             // 
@@ -287,11 +292,6 @@
             this.добавитьОбъявлениеToolStripMenuItem.Size = new System.Drawing.Size(140, 20);
             this.добавитьОбъявлениеToolStripMenuItem.Text = "Добавить объявление";
             this.добавитьОбъявлениеToolStripMenuItem.Click += new System.EventHandler(this.добавитьОбъявлениеToolStripMenuItem_Click);
-            // 
-            // columnHeader5
-            // 
-            this.columnHeader5.Text = "Статус";
-            this.columnHeader5.Width = 82;
             // 
             // MainForm
             // 

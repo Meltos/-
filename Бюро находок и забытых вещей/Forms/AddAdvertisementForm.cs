@@ -132,6 +132,7 @@ namespace Бюро_находок_и_забытых_вещей
             advertisement.Country = (Country)comboBox3.SelectedItem;
             advertisement.City = (City)comboBox4.SelectedItem;
             advertisement.Discovered = (string)comboBox5.SelectedItem;
+            if (code == 1)
             advertisement.Time = DateTime.Now;
             dB.Save();
             Close();

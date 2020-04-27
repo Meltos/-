@@ -15,10 +15,10 @@ namespace Бюро_находок_и_забытых_вещей
         Paginator<CountryDB, Country> paginator;
         ListViewViewer viewer;
         CountryDB dB;
-        public CountryForm()
+        public CountryForm(CountryDB dB)
         {
             InitializeComponent();
-            dB = new CountryDB();
+            this.dB = dB;
             // создаем экземпляр пагинатора для отображения 10 записей на странице. Число 10 можно сделать переменной и вынести в настройки
             paginator = new Paginator<CountryDB, Country>(dB, 15);
             // для отображения данных в листвью я сделал отдельный класс
@@ -34,7 +34,6 @@ namespace Бюро_находок_и_забытых_вещей
             // вызываем обновление всех данных и событий
             // за счет того, что данный метод вызывается ПОСЛЕ создания пагинатора интерфейс успевает подписаться на события пагинатора и нормально отобразить все данные
             dB.Save();
-
         }
 
         private void Paginator_CurrentIndexChanged(object sender, EventArgs e)
