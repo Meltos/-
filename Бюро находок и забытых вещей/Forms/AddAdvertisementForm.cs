@@ -51,9 +51,33 @@ namespace Бюро_находок_и_забытых_вещей
             }
             else if (code == 0)
             {
-                comboBox3.SelectedItem = advertisement.Country;
-                comboBox1.SelectedItem = advertisement.Category;
-                comboBox5.SelectedItem = advertisement.Discovered;
+                for (int i = 0; i < comboBox3.Items.Count; i++)
+                {
+                    Country countrybox = (Country)comboBox3.Items[i];
+                    if (countrybox.NameCountry == advertisement.Country.NameCountry)
+                    {
+                        comboBox3.SelectedIndex = i;
+                        i = comboBox3.Items.Count;
+                    }
+                }
+                for (int i = 0; i < comboBox1.Items.Count; i++)
+                {
+                    Category catrgorybox = (Category)comboBox1.Items[i];
+                    if (catrgorybox.NameCategory == advertisement.Category.NameCategory)
+                    {
+                        comboBox1.SelectedIndex = i;
+                        i = comboBox1.Items.Count;
+                    }
+                }
+                for (int i = 0; i < comboBox5.Items.Count; i++)
+                {
+                    string discoveredbox = (string)comboBox5.Items[i];
+                    if (discoveredbox == advertisement.Discovered)
+                    {
+                        comboBox5.SelectedIndex = i;
+                        i = comboBox5.Items.Count;
+                    }
+                }
                 button2.Visible = true;
                 label11.Visible = true;
                 TimeSpan timeSpan = new TimeSpan();
@@ -95,7 +119,17 @@ namespace Бюро_находок_и_забытых_вещей
             comboBox2.DataSource = categoryDB.GetSubCategories((Category)comboBox1.SelectedItem);
             comboBox2.DisplayMember = "NameSubcategory";
             if (code == 0)
-                comboBox2.SelectedItem = advertisement.Subcategory;
+            {
+                for (int i = 0; i < comboBox2.Items.Count; i++)
+                {
+                    SubCategory subCategorybox = (SubCategory)comboBox2.Items[i];
+                    if (subCategorybox.NameSubcategory == advertisement.Subcategory.NameSubcategory)
+                    {
+                        comboBox2.SelectedIndex = i;
+                        i = comboBox2.Items.Count;
+                    }
+                }
+            }
         }
 
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
@@ -117,7 +151,17 @@ namespace Бюро_находок_и_забытых_вещей
             comboBox4.DataSource = countryDB.GetCities((Country)comboBox3.SelectedItem);
             comboBox4.DisplayMember = "NameCity";
             if (code == 0)
-                comboBox4.SelectedItem = advertisement.City;
+            {
+                for (int i = 0; i < comboBox4.Items.Count; i++)
+                {
+                    City citybox = (City)comboBox4.Items[i];
+                    if (citybox.NameCity == advertisement.City.NameCity)
+                    {
+                        comboBox4.SelectedIndex = i;
+                        i = comboBox4.Items.Count;
+                    }
+                }
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)

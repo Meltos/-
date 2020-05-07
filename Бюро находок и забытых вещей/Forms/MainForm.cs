@@ -30,10 +30,6 @@ namespace Бюро_находок_и_забытых_вещей
             // для отображения данных в листвью я сделал отдельный класс
             // в нем кэшируются строки
             viewer = new ListViewViewer(listView1, 5, 20);
-
-
-            // вызываем обновление всех данных и событий
-            // за счет того, что данный метод вызывается ПОСЛЕ создания пагинатора интерфейс успевает подписаться на события пагинатора и нормально отобразить все данные
             dB.Save();
         }
 
@@ -210,6 +206,7 @@ namespace Бюро_находок_и_забытых_вещей
                 MessageBox.Show("Вы ещё не добавили страну!");
                 return;
             }
+            listView1.Items.Clear();
             paginator.ShowRowsChanges -= Paginator_ShowRowsChanges;
             AddAdvertisementForm addAdvertisementForm = new AddAdvertisementForm(dB, categoryDB, countryDB, discoveredDB, dB.Add(), 1);
             addAdvertisementForm.ShowDialog();
