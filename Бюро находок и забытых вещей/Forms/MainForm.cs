@@ -234,7 +234,28 @@ namespace Бюро_находок_и_забытых_вещей
                 paginator.CurrentIndexChanged -= Paginator_CurrentIndexChanged;
                 i--;
             }
-            
+            List<Advertisement> advertisements = new List<Advertisement>();
+            advertisements = dB.GetList();
+            Country combocountry = new Country();
+            combocountry = (Country)comboBox1.SelectedItem;
+            City combocity = new City();
+            combocity = (City)comboBox2.SelectedItem;
+            Category combocategory = new Category();
+            combocategory = (Category)comboBox3.SelectedItem;
+            SubCategory combosubCategory = new SubCategory();
+            combosubCategory = (SubCategory)comboBox4.SelectedItem;
+            string combodiscovered = (string)comboBox5.SelectedItem;
+            foreach (var row in advertisements)
+            {
+                if (row.Country.NameCountry.Contains(combocountry?.NameCountry) &&
+                row.Category.NameCategory.Contains(combocategory?.NameCategory) &&
+                row.Discovered.Contains(combodiscovered) &&
+                row.City.NameCity.Contains(combocity?.NameCity) &&
+                row.Subcategory.NameSubcategory.Contains(combosubCategory?.NameSubcategory))
+                {
+                    //не доделал)
+                }
+            }
             // подписываемся на событие изменения выводимых записей
             paginator.ShowRowsChanges += Paginator_ShowRowsChanges;
             // подписываемся на изменение кол-ва страниц
