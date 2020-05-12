@@ -96,6 +96,7 @@
       <DependentUpon>CountryForm.cs</DependentUpon>
     </Compile>
     <Compile Include="DiscoveredDB.cs" />
+    <Compile Include="FilterDB.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

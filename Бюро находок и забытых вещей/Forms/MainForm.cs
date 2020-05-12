@@ -12,12 +12,13 @@ namespace Бюро_находок_и_забытых_вещей
 {
     public partial class MainForm : Form
     {
-        Paginator<AdvertisementDB, Advertisement> paginator;
+        Paginator<FilterDB, Advertisement> paginator;
         ListViewViewer viewer;
         CategoryDB categoryDB;
         CountryDB countryDB;
         DiscoveredDB discoveredDB;
         AdvertisementDB dB;
+        FilterDB filterDB;
         int i = 0;
         public MainForm()
         {
@@ -25,8 +26,9 @@ namespace Бюро_находок_и_забытых_вещей
             LoadBox();
 
             dB = new AdvertisementDB();
+            filterDB = new FilterDB();
             // создаем экземпляр пагинатора для отображения 10 записей на странице. Число 10 можно сделать переменной и вынести в настройки
-            paginator = new Paginator<AdvertisementDB, Advertisement>(dB, 20);
+            paginator = new Paginator<FilterDB, Advertisement>(filterDB, 20);
             // для отображения данных в листвью я сделал отдельный класс
             // в нем кэшируются строки
             viewer = new ListViewViewer(listView1, 5, 20);
@@ -69,33 +71,7 @@ namespace Бюро_находок_и_забытых_вещей
 
         private void ShowAdvertisementData(List<Advertisement> rows)
         {
-            List<Advertisement> filter = new List<Advertisement>();
-            Country combocountry = new Country();
-            combocountry = (Country)comboBox1.SelectedItem;
-            City combocity = new City();
-            combocity = (City)comboBox2.SelectedItem;
-            Category combocategory = new Category();
-            combocategory = (Category)comboBox3.SelectedItem;
-            SubCategory combosubCategory = new SubCategory();
-            combosubCategory = (SubCategory)comboBox4.SelectedItem;
-            string combodiscovered = (string)comboBox5.SelectedItem;
-            if (combocountry.NameCountry == "" && combocategory.NameCategory == "" && combodiscovered == "")
-            {
-                viewer.ViewData(rows);
-                return;
-            }
-            foreach (var row in rows)
-            {
-                if (row.Country.NameCountry.Contains(combocountry?.NameCountry) &&
-                row.Category.NameCategory.Contains(combocategory?.NameCategory) &&
-                row.Discovered.Contains(combodiscovered) &&
-                row.City.NameCity.Contains(combocity?.NameCity) &&
-                row.Subcategory.NameSubcategory.Contains(combosubCategory?.NameSubcategory))
-                {
-                    filter.Add(row);
-                }
-            }
-            viewer.ViewData(filter);
+            
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -234,8 +210,7 @@ namespace Бюро_находок_и_забытых_вещей
                 paginator.CurrentIndexChanged -= Paginator_CurrentIndexChanged;
                 i--;
             }
-            List<Advertisement> advertisements = new List<Advertisement>();
-            advertisements = dB.GetList();
+            List<Advertisement> filter = new List<Advertisement>();
             Country combocountry = new Country();
             combocountry = (Country)comboBox1.SelectedItem;
             City combocity = new City();
@@ -245,17 +220,26 @@ namespace Бюро_находок_и_забытых_вещей
             SubCategory combosubCategory = new SubCategory();
             combosubCategory = (SubCategory)comboBox4.SelectedItem;
             string combodiscovered = (string)comboBox5.SelectedItem;
-            foreach (var row in advertisements)
+            if (combocountry.NameCountry == "" && combocategory.NameCategory == "" && combodiscovered == "")
             {
-                if (row.Country.NameCountry.Contains(combocountry?.NameCountry) &&
-                row.Category.NameCategory.Contains(combocategory?.NameCategory) &&
-                row.Discovered.Contains(combodiscovered) &&
-                row.City.NameCity.Contains(combocity?.NameCity) &&
-                row.Subcategory.NameSubcategory.Contains(combosubCategory?.NameSubcategory))
-                {
-                    //не доделал)
-                }
+                filterDB.SetCurrentData(dB.GetList());
             }
+            else
+            {
+                foreach (var row in dB.GetList())
+                {
+                    if (row.Country.NameCountry.Contains(combocountry?.NameCountry) &&
+                    row.Category.NameCategory.Contains(combocategory?.NameCategory) &&
+                    row.Discovered.Contains(combodiscovered) &&
+                    row.City.NameCity.Contains(combocity?.NameCity) &&
+                    row.Subcategory.NameSubcategory.Contains(combosubCategory?.NameSubcategory))
+                    {
+                        filter.Add(row);
+                    }
+                }
+                filterDB.SetCurrentData(filter);
+            }
+            viewer.ViewData(filterDB.GetList());
             // подписываемся на событие изменения выводимых записей
             paginator.ShowRowsChanges += Paginator_ShowRowsChanges;
             // подписываемся на изменение кол-ва страниц
