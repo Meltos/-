@@ -19,7 +19,7 @@ namespace Бюро_находок_и_забытых_вещей
         DiscoveredDB discoveredDB;
         AdvertisementDB dB;
         FilterDB filterDB;
-        int i = 0;
+
         public MainForm()
         {
             InitializeComponent();
@@ -28,10 +28,13 @@ namespace Бюро_находок_и_забытых_вещей
             dB = new AdvertisementDB();
             filterDB = new FilterDB();
             // создаем экземпляр пагинатора для отображения 10 записей на странице. Число 10 можно сделать переменной и вынести в настройки
-            paginator = new Paginator<FilterDB, Advertisement>(filterDB, 20);
+            paginator = new Paginator<FilterDB, Advertisement>(filterDB, 5);
+            paginator.CountChanged += Paginator_CountChanged;
+            paginator.CurrentIndexChanged += Paginator_CurrentIndexChanged;
+            paginator.ShowRowsChanges += Paginator_ShowRowsChanges;
             // для отображения данных в листвью я сделал отдельный класс
             // в нем кэшируются строки
-            viewer = new ListViewViewer(listView1, 5, 20);
+            viewer = new ListViewViewer(listView1, 5, 5);
             dB.Save();
         }
 
@@ -66,12 +69,7 @@ namespace Бюро_находок_и_забытых_вещей
 
         private void Paginator_ShowRowsChanges(object sender, EventArgs e)
         {
-            ShowAdvertisementData(paginator.ShowRows);
-        }
-
-        private void ShowAdvertisementData(List<Advertisement> rows)
-        {
-            
+            viewer.ViewData(paginator.ShowRows);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -200,16 +198,6 @@ namespace Бюро_находок_и_забытых_вещей
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (i == 1)
-            {
-                // подписываемся на событие изменения выводимых записей
-                paginator.ShowRowsChanges -= Paginator_ShowRowsChanges;
-                // подписываемся на изменение кол-ва страниц
-                paginator.CountChanged -= Paginator_CountChanged;
-                // подписываемся на изменение текущего индекса
-                paginator.CurrentIndexChanged -= Paginator_CurrentIndexChanged;
-                i--;
-            }
             List<Advertisement> filter = new List<Advertisement>();
             Country combocountry = new Country();
             combocountry = (Country)comboBox1.SelectedItem;
@@ -239,14 +227,8 @@ namespace Бюро_находок_и_забытых_вещей
                 }
                 filterDB.SetCurrentData(filter);
             }
-            viewer.ViewData(filterDB.GetList());
-            // подписываемся на событие изменения выводимых записей
-            paginator.ShowRowsChanges += Paginator_ShowRowsChanges;
-            // подписываемся на изменение кол-ва страниц
-            paginator.CountChanged += Paginator_CountChanged;
-            // подписываемся на изменение текущего индекса
-            paginator.CurrentIndexChanged += Paginator_CurrentIndexChanged;
-            i++;
+            viewer.ViewData(paginator.ShowRows);
+
             dB.Save();
         }
 

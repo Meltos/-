@@ -48,6 +48,7 @@ namespace Бюро_находок_и_забытых_вещей
         public void SetCurrentData(List<Advertisement> advertisements)
         {
             filter = advertisements;
+            CountChanged?.Invoke(this, null);
         }
     }
 }
