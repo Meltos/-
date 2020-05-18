@@ -55,6 +55,7 @@
             this.добавитьПодкатегориюToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.добавитьОбъявлениеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.отчётToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -279,7 +280,8 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.добавитьОбъявлениеToolStripMenuItem,
-            this.редактированиеToolStripMenuItem});
+            this.редактированиеToolStripMenuItem,
+            this.отчётToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(940, 24);
@@ -292,6 +294,13 @@
             this.добавитьОбъявлениеToolStripMenuItem.Size = new System.Drawing.Size(140, 20);
             this.добавитьОбъявлениеToolStripMenuItem.Text = "Добавить объявление";
             this.добавитьОбъявлениеToolStripMenuItem.Click += new System.EventHandler(this.добавитьОбъявлениеToolStripMenuItem_Click);
+            // 
+            // отчётToolStripMenuItem
+            // 
+            this.отчётToolStripMenuItem.Name = "отчётToolStripMenuItem";
+            this.отчётToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
+            this.отчётToolStripMenuItem.Text = "Отчёты";
+            this.отчётToolStripMenuItem.Click += new System.EventHandler(this.отчётToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -353,5 +362,6 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem добавитьОбъявлениеToolStripMenuItem;
         private System.Windows.Forms.ColumnHeader columnHeader5;
+        private System.Windows.Forms.ToolStripMenuItem отчётToolStripMenuItem;
     }
 }

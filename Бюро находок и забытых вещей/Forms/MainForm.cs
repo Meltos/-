@@ -28,13 +28,13 @@ namespace Бюро_находок_и_забытых_вещей
             dB = new AdvertisementDB();
             filterDB = new FilterDB();
             // создаем экземпляр пагинатора для отображения 10 записей на странице. Число 10 можно сделать переменной и вынести в настройки
-            paginator = new Paginator<FilterDB, Advertisement>(filterDB, 5);
+            paginator = new Paginator<FilterDB, Advertisement>(filterDB, 20);
             paginator.CountChanged += Paginator_CountChanged;
             paginator.CurrentIndexChanged += Paginator_CurrentIndexChanged;
             paginator.ShowRowsChanges += Paginator_ShowRowsChanges;
             // для отображения данных в листвью я сделал отдельный класс
             // в нем кэшируются строки
-            viewer = new ListViewViewer(listView1, 5, 5);
+            viewer = new ListViewViewer(listView1, 5, 20);
             dB.Save();
         }
 
@@ -53,7 +53,6 @@ namespace Бюро_находок_и_забытых_вещей
 
             comboBox5.DataSource = null;
             comboBox5.DataSource = discoveredDB.GetDiscoveredBox();
-            comboBox5.DisplayMember = "Status";
         }
 
         private void Paginator_CurrentIndexChanged(object sender, EventArgs e)
@@ -180,8 +179,6 @@ namespace Бюро_находок_и_забытых_вещей
                 MessageBox.Show("Вы ещё не добавили страну!");
                 return;
             }
-            listView1.Items.Clear();
-            paginator.ShowRowsChanges -= Paginator_ShowRowsChanges;
             AddAdvertisementForm addAdvertisementForm = new AddAdvertisementForm(dB, categoryDB, countryDB, discoveredDB, dB.Add(), 1);
             addAdvertisementForm.ShowDialog();
             dB.Save();
@@ -238,6 +235,11 @@ namespace Бюро_находок_и_забытых_вещей
                 paginator.Right();
             else if (e.NewValue < e.OldValue)
                 paginator.Left();
+        }
+
+        private void отчётToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

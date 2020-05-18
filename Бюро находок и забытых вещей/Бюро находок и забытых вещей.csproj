@@ -103,6 +103,13 @@
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ReportDB.cs" />
+    <Compile Include="Forms\ReportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ReportForm.Designer.cs">
+      <DependentUpon>ReportForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SubCategoryDB.cs" />
     <Compile Include="IDB.cs" />
     <Compile Include="Forms\SubcategoryForm.cs">
@@ -150,6 +157,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ReportForm.resx">
+      <DependentUpon>ReportForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SubcategoryForm.resx">
       <DependentUpon>SubcategoryForm.cs</DependentUpon>
