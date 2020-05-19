@@ -106,7 +106,7 @@ namespace Бюро_находок_и_забытых_вещей
             }
             else if (comboBox2.Text == "За всё время")
             {
-                span = span.Add(new TimeSpan(int.MaxValue, 0, 0, 0));
+                span = span.Add(new TimeSpan(10000, 0, 0, 0));
             }
             else
             {
@@ -114,7 +114,7 @@ namespace Бюро_находок_и_забытых_вещей
             }
             foreach (var row in dB.GetList())
             {
-                if (comboBox2.Text == "Своё время")
+                if (comboBox2.Text == "Своя дата")
                 {
                     if (comboBox1.Text == "Все объявления" && row.Time.Date == dateTime.Date)
                         filter.Add(row);
@@ -125,11 +125,11 @@ namespace Бюро_находок_и_забытых_вещей
                 }
                 else
                 {
-                    if (comboBox1.Text == "Все объявления" && span == DateTime.Now - row.Time)
+                    if (comboBox1.Text == "Все объявления" && span > DateTime.Now - row.Time)
                         filter.Add(row);
-                    else if (comboBox1.Text == "Открытые объявления" && span == DateTime.Now - row.Time && row.Close == false)
+                    else if (comboBox1.Text == "Открытые объявления" && span > DateTime.Now - row.Time && row.Close == false)
                         filter.Add(row);
-                    else if (comboBox1.Text == "Закрытые объявления" && span == DateTime.Now - row.Time && row.Close == true)
+                    else if (comboBox1.Text == "Закрытые объявления" && span > DateTime.Now - row.Time && row.Close == true)
                         filter.Add(row);
                 }
             }

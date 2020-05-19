@@ -182,6 +182,7 @@ namespace Бюро_находок_и_забытых_вещей
             AddAdvertisementForm addAdvertisementForm = new AddAdvertisementForm(dB, categoryDB, countryDB, discoveredDB, dB.Add(), 1);
             addAdvertisementForm.ShowDialog();
             dB.Save();
+            viewer.ViewData(paginator.ShowRows);
         }
 
         private void listView1_DoubleClick(object sender, EventArgs e)
@@ -191,6 +192,7 @@ namespace Бюро_находок_и_забытых_вещей
             Advertisement advertisement1 = (Advertisement)listView1.SelectedItems[0].Tag;
             AddAdvertisementForm addAdvertisementForm = new AddAdvertisementForm(dB, categoryDB, countryDB, discoveredDB, advertisement1, 0);
             addAdvertisementForm.ShowDialog();
+            viewer.ViewData(paginator.ShowRows);
         }
 
         private void button1_Click(object sender, EventArgs e)
