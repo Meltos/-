@@ -63,7 +63,6 @@ namespace Бюро_находок_и_забытых_вещей
         public List<string> SetTimeBox()
         {
             List<string> timecombo = new List<string>();
-            timecombo.Add("За день");
             timecombo.Add("За неделю");
             timecombo.Add("За месяц");
             timecombo.Add("За год");

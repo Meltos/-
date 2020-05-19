@@ -239,7 +239,8 @@ namespace Бюро_находок_и_забытых_вещей
 
         private void отчётToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            ReportForm reportForm = new ReportForm();
+            reportForm.ShowDialog();
         }
     }
 }

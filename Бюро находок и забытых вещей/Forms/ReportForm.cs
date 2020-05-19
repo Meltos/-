@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Бюро_находок_и_забытых_вещей.Forms
+namespace Бюро_находок_и_забытых_вещей
 {
     public partial class ReportForm : Form
     {
@@ -20,9 +20,10 @@ namespace Бюро_находок_и_забытых_вещей.Forms
         public ReportForm()
         {
             InitializeComponent();
+            reportDB = new ReportDB();
             LoadBox();
             dB = new AdvertisementDB();
-            reportDB = new ReportDB();
+            
             // создаем экземпляр пагинатора для отображения 10 записей на странице. Число 10 можно сделать переменной и вынести в настройки
             paginator = new Paginator<ReportDB, Advertisement>(reportDB, 20);
             paginator.CountChanged += Paginator_CountChanged; ;
@@ -75,6 +76,65 @@ namespace Бюро_находок_и_забытых_вещей.Forms
                 paginator.Right();
             else if (e.NewValue < e.OldValue)
                 paginator.Left();
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBox2.Text == "Своя дата")
+            {
+                dateTimePicker1.Visible = true;
+                label1.Visible = true;
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            List<Advertisement> filter = new List<Advertisement>();
+            TimeSpan span = new TimeSpan(0, 0, 0, 0);
+            DateTime dateTime = new DateTime();
+            if (comboBox2.Text == "За неделю")
+            {
+                span = span.Add(new TimeSpan(7, 0, 0, 0));
+            }
+            else if (comboBox2.Text == "За месяц")
+            { 
+                span = span.Add(new TimeSpan(30, 0, 0, 0));
+            }
+            else if (comboBox2.Text == "За год")
+            {
+                span = span.Add(new TimeSpan(365, 0, 0, 0));
+            }
+            else if (comboBox2.Text == "За всё время")
+            {
+                span = span.Add(new TimeSpan(int.MaxValue, 0, 0, 0));
+            }
+            else
+            {
+                dateTime = dateTimePicker1.Value;
+            }
+            foreach (var row in dB.GetList())
+            {
+                if (comboBox2.Text == "Своё время")
+                {
+                    if (comboBox1.Text == "Все объявления" && row.Time.Date == dateTime.Date)
+                        filter.Add(row);
+                    else if (comboBox1.Text == "Открытые объявления" && row.Time.Date == dateTime.Date && row.Close == false)
+                        filter.Add(row);
+                    else if (comboBox1.Text == "Закрытые объявления" && row.Time.Date == dateTime.Date && row.Close == true)
+                        filter.Add(row);
+                }
+                else
+                {
+                    if (comboBox1.Text == "Все объявления" && span == DateTime.Now - row.Time)
+                        filter.Add(row);
+                    else if (comboBox1.Text == "Открытые объявления" && span == DateTime.Now - row.Time && row.Close == false)
+                        filter.Add(row);
+                    else if (comboBox1.Text == "Закрытые объявления" && span == DateTime.Now - row.Time && row.Close == true)
+                        filter.Add(row);
+                }
+            }
+            reportDB.SetCurrentData(filter);
+            viewer.ViewData(paginator.ShowRows);
         }
     }
 }
