@@ -82,7 +82,7 @@ namespace Бюро_находок_и_забытых_вещей
                 label11.Visible = true;
                 TimeSpan timeSpan = new TimeSpan();
                 timeSpan = DateTime.Now - advertisement.Time;
-                label11.Text = $"Время прошло: {timeSpan}";
+                label11.Text = $"Времени прошло: {timeSpan}";
             }
             if (advertisement.Close == true)
             {

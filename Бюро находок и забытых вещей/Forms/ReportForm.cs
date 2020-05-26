@@ -16,22 +16,27 @@ namespace Бюро_находок_и_забытых_вещей
         ListViewViewer viewer;
         ReportDB reportDB;
         AdvertisementDB dB;
+        CategoryDB categoryDB;
+        CountryDB countryDB;
+        DiscoveredDB discoveredDB;
 
-        public ReportForm()
+        public ReportForm(CategoryDB categoryDB, CountryDB countryDB, DiscoveredDB discoveredDB)
         {
             InitializeComponent();
             reportDB = new ReportDB();
             LoadBox();
             dB = new AdvertisementDB();
-            
+            this.categoryDB = categoryDB;
+            this.countryDB = countryDB;
+            this.discoveredDB = discoveredDB;
             // создаем экземпляр пагинатора для отображения 10 записей на странице. Число 10 можно сделать переменной и вынести в настройки
-            paginator = new Paginator<ReportDB, Advertisement>(reportDB, 20);
+            paginator = new Paginator<ReportDB, Advertisement>(reportDB, 30);
             paginator.CountChanged += Paginator_CountChanged; ;
             paginator.CurrentIndexChanged += Paginator_CurrentIndexChanged;
             paginator.ShowRowsChanges += Paginator_ShowRowsChanges;
             // для отображения данных в листвью я сделал отдельный класс
             // в нем кэшируются строки
-            viewer = new ListViewViewer(listView1, 1, 20);
+            viewer = new ListViewViewer(listView1, 1, 30);
             dB.Save();
         }
 
@@ -85,6 +90,11 @@ namespace Бюро_находок_и_забытых_вещей
                 dateTimePicker1.Visible = true;
                 label1.Visible = true;
             }
+            else
+            {
+                dateTimePicker1.Visible = false;
+                label1.Visible = false;
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -133,7 +143,18 @@ namespace Бюро_находок_и_забытых_вещей
                         filter.Add(row);
                 }
             }
+            label2.Text = $"Количество найденных объявлений:{filter.Count}";
             reportDB.SetCurrentData(filter);
+            viewer.ViewData(paginator.ShowRows);
+        }
+
+        private void listView1_DoubleClick(object sender, EventArgs e)
+        {
+            if (listView1.SelectedIndices.Count == 0)
+                return;
+            Advertisement advertisement1 = (Advertisement)listView1.SelectedItems[0].Tag;
+            AddAdvertisementForm addAdvertisementForm = new AddAdvertisementForm(dB, categoryDB, countryDB, discoveredDB, advertisement1, 0);
+            addAdvertisementForm.ShowDialog();
             viewer.ViewData(paginator.ShowRows);
         }
     }
