@@ -16,14 +16,15 @@ namespace Бюро_находок_и_забытых_вещей
         ListViewViewer viewer;
         CategoryDB categoryDB;
         SubCategoryDB dB;
-        public SubcategoryForm(CategoryDB categoryDB)
+        AdvertisementDB advertisementDB;
+        public SubcategoryForm(CategoryDB categoryDB, AdvertisementDB advertisementDB)
         {
             InitializeComponent();
             this.categoryDB = categoryDB;
             comboBox1.DataSource = null;
             comboBox1.DataSource = categoryDB.GetList();
             comboBox1.DisplayMember = "NameCategory";
-            
+            this.advertisementDB = advertisementDB;
             // подписываемся на событие изменения выводимых записей
             paginator.ShowRowsChanges += Paginator_ShowRowsChanges;
             // подписываемся на изменение кол-ва страниц
@@ -125,6 +126,14 @@ namespace Бюро_находок_и_забытых_вещей
             if (listView1.SelectedIndices.Count == 0)
                 return;
             SubCategory subCategory = (SubCategory)listView1.SelectedItems[0].Tag;
+            foreach (var advertisement in advertisementDB.GetList())
+            {
+                if (advertisement.Close != true && advertisement.Subcategory == subCategory)
+                {
+                    MessageBox.Show("Существует незакрытое объявление с этой подкатегорией!");
+                    return;
+                }
+            }
             if (MessageBox.Show("Точно удалить подкатегорию?", "Предупреждение!", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 dB.Remove(subCategory);

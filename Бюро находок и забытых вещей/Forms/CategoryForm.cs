@@ -15,11 +15,13 @@ namespace Бюро_находок_и_забытых_вещей
         Paginator<CategoryDB, Category> paginator;
         ListViewViewer viewer;
         CategoryDB dB;
-        public CategoryForm(CategoryDB dB)
+        AdvertisementDB advertisementDB;
+        public CategoryForm(CategoryDB dB, AdvertisementDB advertisementDB)
         {
             InitializeComponent();
 
             this.dB = dB;
+            this.advertisementDB = advertisementDB;
             // создаем экземпляр пагинатора для отображения 10 записей на странице. Число 10 можно сделать переменной и вынести в настройки
             paginator = new Paginator<CategoryDB, Category>(dB, 15);
             // для отображения данных в листвью я сделал отдельный класс
@@ -101,6 +103,15 @@ namespace Бюро_находок_и_забытых_вещей
                 MessageBox.Show("Нельзя удалить категорию, если у неё остались подкатегории!");
                 return;
             }
+            foreach (var advertisement in advertisementDB.GetList())
+            {
+                if (advertisement.Close != true && advertisement.Category == category)
+                {
+                    MessageBox.Show("Существует незакрытое объявление с этой категорией!");
+                    return;
+                }
+            }
+
             if (MessageBox.Show("Точно удалить категорию?", "Предупреждение!", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 dB.Remove(category);

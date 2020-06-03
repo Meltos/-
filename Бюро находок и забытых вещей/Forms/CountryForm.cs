@@ -15,10 +15,12 @@ namespace Бюро_находок_и_забытых_вещей
         Paginator<CountryDB, Country> paginator;
         ListViewViewer viewer;
         CountryDB dB;
-        public CountryForm(CountryDB dB)
+        AdvertisementDB advertisementDB;
+        public CountryForm(CountryDB dB, AdvertisementDB advertisementDB)
         {
             InitializeComponent();
             this.dB = dB;
+            this.advertisementDB = advertisementDB;
             // создаем экземпляр пагинатора для отображения 10 записей на странице. Число 10 можно сделать переменной и вынести в настройки
             paginator = new Paginator<CountryDB, Country>(dB, 15);
             // для отображения данных в листвью я сделал отдельный класс
@@ -81,6 +83,14 @@ namespace Бюро_находок_и_забытых_вещей
             {
                 MessageBox.Show("Нельзя удалить страну, если у неё остались города!");
                 return;
+            }
+            foreach (var advertisement in advertisementDB.GetList())
+            {
+                if (advertisement.Close != true && advertisement.Country == country)
+                {
+                    MessageBox.Show("Существует незакрытое объявление с этой страной!");
+                    return;
+                }
             }
             if (MessageBox.Show("Точно удалить страну?", "Предупреждение!", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {

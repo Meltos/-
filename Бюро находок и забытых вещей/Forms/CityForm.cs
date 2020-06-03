@@ -16,13 +16,15 @@ namespace Бюро_находок_и_забытых_вещей
         ListViewViewer viewer;
         CityDB dB;
         CountryDB CountryDB;
-        public CityForm(CountryDB CountryDB)
+        AdvertisementDB advertisementDB;
+        public CityForm(CountryDB CountryDB, AdvertisementDB advertisementDB)
         {
             InitializeComponent();
             this.CountryDB = CountryDB;
             comboBox1.DataSource = null;
             comboBox1.DataSource = CountryDB.GetList();
             comboBox1.DisplayMember = "NameCountry";
+            this.advertisementDB = advertisementDB;
             // подписываемся на событие изменения выводимых записей
             paginator.ShowRowsChanges += Paginator_ShowRowsChanges;
             // подписываемся на изменение кол-ва страниц
@@ -128,6 +130,14 @@ namespace Бюро_находок_и_забытых_вещей
             if (listView1.SelectedIndices.Count == 0)
                 return;
             City city = (City)listView1.SelectedItems[0].Tag;
+            foreach (var advertisement in advertisementDB.GetList())
+            {
+                if (advertisement.Close != true && advertisement.City == city)
+                {
+                    MessageBox.Show("Существует незакрытое объявление с этим городом!");
+                    return;
+                }
+            }
             if (MessageBox.Show("Точно удалить город?", "Предупреждение!", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 dB.Remove(city);

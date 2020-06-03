@@ -83,7 +83,7 @@ namespace Бюро_находок_и_забытых_вещей
 
         private void добавитьСтрануToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CountryForm countryForm = new CountryForm(countryDB);
+            CountryForm countryForm = new CountryForm(countryDB, dB);
             countryForm.ShowDialog();
             LoadBox();
         }
@@ -96,14 +96,14 @@ namespace Бюро_находок_и_забытых_вещей
                 MessageBox.Show("Вы ещё не добавили страну!");
                 return;
             }
-            CityForm cityForm = new CityForm(countryDB);
+            CityForm cityForm = new CityForm(countryDB, dB);
             cityForm.ShowDialog();
             LoadBox();
         }
 
         private void добавитьКатегориюToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CategoryForm categoryForm = new CategoryForm(categoryDB);
+            CategoryForm categoryForm = new CategoryForm(categoryDB, dB);
             categoryForm.ShowDialog();
             LoadBox();
         }
@@ -116,7 +116,7 @@ namespace Бюро_находок_и_забытых_вещей
                 MessageBox.Show("Вы ещё не создали категорию!");
                 return;
             }
-            SubcategoryForm subcategoryForm = new SubcategoryForm(categoryDB);
+            SubcategoryForm subcategoryForm = new SubcategoryForm(categoryDB, dB);
             subcategoryForm.ShowDialog();
             LoadBox();
         }
